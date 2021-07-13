@@ -6,3 +6,4 @@ for that I used SINGLE TON - desighn The commands are divided into packages acco
 from which all the classes that print and receive the commands are inherited. To run the correct command I used FACTORY's DESIGHN, 
 Which produces the appropriate quartet for each command at the time of execution. And there is an INVOKER who is responsible 
 for running the actual commands he receives from the CLI
+Explanition for each command and for each class you can find in the code itself
