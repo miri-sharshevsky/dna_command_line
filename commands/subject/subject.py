@@ -4,10 +4,10 @@ class Subject:
     def __init__(self):
         self._observers = []
 
-    def notify(self,command, dna, modifier=None):
+    def notify(self,command, modifier=None):
         for observer in self._observers:
             if modifier != observer:
-                return observer.update(command, dna)
+                return observer.update(command)
 
     def attach(self, observer):
         if observer not in self._observers:

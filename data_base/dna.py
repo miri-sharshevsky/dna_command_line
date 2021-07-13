@@ -41,7 +41,6 @@ class DNA:
             raise Exception("The DNA be must with A, C, T and G chars only")
         self.__dna_sequence = dna_string
 
-
     def insert(self, nucleotide_value, index):
         """
         gets nucleotide value and index and insert that

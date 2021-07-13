@@ -1,9 +1,8 @@
 import os
-from commands.parser import Parser
-from dna_sequences.dna import DNA
+from commands.load_commands.loads import Loads
 
 
-class Load_command(Parser):
+class Load_command(Loads):
     __instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -17,16 +16,18 @@ class Load_command(Parser):
         loads the sequence from the file, assigns it with a number (ID) and a default name, if
         one was not provided
         :param command: Load command to run
-        :return:The result printed
+        Required command: load <file_name> [@<sequence_name>]
         """
-        command = super().run_command(command)
-        if type(command) == str:
-            return command
+        try:
+            command = super().run_command(command)
+        except Exception as error:
+            return error
+
         if '.' not in command[0]:
             command[0] += '.rawdna'
         try:
             return self.add_dna_sequences_from_file(command[0], command[1]if len(command) > 1 else None)
-        except:
+        except Exception:
             return "in valid file path"
 
 
@@ -38,23 +39,20 @@ class Load_command(Parser):
         :return: Str of the new dna
         """
         try:
-            with open(file_path, 'w') as dna_file:
+            with open(file_path, 'r') as dna_file:
                 sequence = dna_file.readline()
         except Exception:
             raise Exception("in valid file path")
 
         if not name:
             name = os.path.splitext(os.path.basename(file_path))[0]
-            index = 1
-            while super().get_dna_holder().check_sequence_in_the_dna(name):
-                name = f"{os.path.splitext(os.path.basename(file_path))[0]}_{index}"
-                index += 1
         try:
-            dna = super().get_dna_holder().add_dna(sequence, name)
+            dna = super().get_dna_holder().add_dna(sequence, name, 'files')
         except Exception as error:
             raise error
-        if len(dna.get_dna()) > 40:
+        if len(sequence) > 40:
             sequence = sequence[0:31] + "..." + sequence[-3:]
-        else:
-            sequence = dna.get_dna()
-        return f"[{dna.get_sequence_id()}] {dna.get_sequence_name()}: {sequence}"
+            dna = dna.split(" ")
+            dna[2] = sequence
+            dna = " ".join(dna)
+        return dna

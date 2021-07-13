@@ -10,7 +10,7 @@ class Invoker:
 
     def run_command(self, command_to_run):
         """
-        Runinig the correct command according to the factory
+        Running the correct command according to the factory
         :param command_to_run
         :return: The command's result
         """

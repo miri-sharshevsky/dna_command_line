@@ -10,7 +10,7 @@ class CLI:
     def set_prompt(self, prompt):
         self.__prompt = prompt
 
-    def run(self):
+    def run_command(self):
         raise
 
 

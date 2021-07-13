@@ -1,4 +1,4 @@
-from dna_sequences.dna import DNA
+from data_base.dna import DNA
 
 
 def test_dna():

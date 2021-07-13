@@ -1,7 +1,10 @@
-from commands.command import Command
+import commands
 
 
-class Management(Command):
+class Management(commands.Command):
+    """
+    Class for all the management commands
+    """
     def run_command(self, command):
         commands = command.split(" ")
         try:

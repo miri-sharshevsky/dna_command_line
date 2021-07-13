@@ -1,9 +1,10 @@
-from commands.command import Command
-from commands.parser import Parser
+from commands.load_commands.loads import Loads
 
 
-class New_command(Parser):
-
+class New_command(Loads):
+    """
+    Load command with add a new dna to the data base
+    """
     __instance = None
 
 
@@ -17,16 +18,14 @@ class New_command(Parser):
         Creates a new sequence, as described by the followed sequence.
         If the @<sequence_name> is used, then this will be the name of the new sequence.
         Otherwise, a default name will be provided
-        :param command: New command to run
-        :return: The result printed
+        Required command: new <sequence> [@<sequence_name>]
         """
-        # command = command.split(" ")
-        # if not 2 <= len(command) <= 3 or (len(command) > 2 and not command[2].startswith('@')):
-        #     return "iv valid command"
-        command = super().run_command(command)
-        if len(command) > 3:
-            return "in valid command"
         try:
+            command = super().run_command(command)
+            if not 2<=len(command) <= 3:
+                raise Exception("in valid command")
+            if super().get_dna_holder().check_sequence_in_the_dna(command[1]):
+                command[1] = None
             return super().get_dna_holder().add_dna(command[0], command[1])
-        except:
-            return command
+        except Exception as error:
+            return error
